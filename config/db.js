@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const connectDB = async () => {
-    await mongoose.connect('mongodb+srv://ilhamnugroho322:17stepbystep@cluster0.vabktkm.mongodb.net/website').then(()=>console.log("DB Connected"));
-}
+    const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/website';
+    
+    await mongoose.connect(mongoURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => console.log("DB Connected"))
+    .catch((err) => console.error("DB Connection Error: ", err));
+};
